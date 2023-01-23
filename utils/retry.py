@@ -4,10 +4,10 @@ import time
 from functools import wraps
 from inspect import iscoroutinefunction
 
-from .funcs import acatch_exp, catch_exp
+from .handle_exp import acatch_exp, catch_exp
 from .types import *
 
-def calc_next_interval(interval: float, 
+def _calc_next_interval(interval: float, 
                        retry_interval: IntervalType):
   if isinstance(retry_interval, tuple):
     _, max_interval, multiplier = retry_interval
@@ -45,7 +45,8 @@ def retry(func: Optional[Callable[..., T]] = None, /,
           _exp: ExpType = Exception,
           _regex: Union[str, re.Pattern] = ".*",
           **kwargs) -> Union[T, WrapperType]:
-  """_times: 重试时间, -1为无限重试; 
+  """重试, 可以用于装饰器, 也可以用于函数;
+  _times: 重试时间, -1为无限重试; 
   _interval: 重试间隔, 可以是一个数字, 也可以是元组(最小间隔, 最大间隔, 乘数), 也可以自定义从上一个间隔计算下一个的函数; 
   _exp: 重试的异常, 可以是一个异常类, 也可以是一个异常类的元组; 
   _regex: 重试的异常信息的正则表达式, 默认为".*", 与retry_exp是`与`的关系 """
@@ -82,7 +83,7 @@ def retry(func: Optional[Callable[..., T]] = None, /,
     if ret is not ExpOccurred:
       return ret  # type: ignore    
     
-    interval = calc_next_interval(interval, _interval)
+    interval = _calc_next_interval(interval, _interval)
     time.sleep(interval)
   return func(*args, **kwargs)
 
@@ -92,7 +93,8 @@ async def aretry(coroutine: Coroutine[Any, Any, T],
           interval: IntervalType = 0,
           exp: ExpType = Exception,
           regex: Union[str, re.Pattern] = ".*") -> T:
-  """times: 重试时间, -1为无限重试; 
+  """(async版)重试, 可以用于coroutine;
+  times: 重试时间, -1为无限重试; 
   interval: 重试间隔, 可以是一个数字, 也可以是元组(最小间隔, 最大间隔, 乘数), 也可以自定义从上一个间隔计算下一个的函数; 
   exp: 重试的异常, 可以是一个异常类, 也可以是一个异常类的元组; 
   regex: 重试的异常信息的正则表达式, 默认为".*", 与retry_exp是`与`的关系 """
@@ -107,6 +109,6 @@ async def aretry(coroutine: Coroutine[Any, Any, T],
     if ret is not ExpOccurred:
       return ret  # type: ignore    
     
-    interval = calc_next_interval(interval, interval)
+    interval = _calc_next_interval(interval, interval)
     time.sleep(interval)
   return await coroutine
