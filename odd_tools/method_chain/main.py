@@ -1,12 +1,10 @@
 from typing import *
 import inspect
-import regex as re
+import re
 import logging
 from logging import Logger
 import ast
 import io
-
-from objprint import op
 
 from ...utils.code import CodeGenerater
 from ...path import TMP_CLASS_PATH
