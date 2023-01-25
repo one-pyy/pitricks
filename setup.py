@@ -7,5 +7,5 @@ setup(
   url='https://github.com/one-pyy/pitricks',
   py_modules=['pitricks'],
   install_requires=[],
-  description='python真难Q皿Q'
+  description='python so hard'
 )
