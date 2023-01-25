@@ -1,5 +1,7 @@
 import logging
 
+__all__ = ['init_log']
+
 def init_log(filename: str = ""):
   """自用初始化log"""
   logging.root.setLevel(logging.NOTSET)

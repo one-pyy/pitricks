@@ -1,5 +1,8 @@
+"协程相关"
 import asyncio as ai
-from typing import *
+from typing import Union, Awaitable, Iterable
+
+__all__ = ['run_sync', 'patch_asyncio']
 
 def run_sync(async_func: Union[Awaitable, Iterable[Awaitable]]):
   """以同步的方式运行异步函数, 可能需要先patch"""

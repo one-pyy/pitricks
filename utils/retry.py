@@ -1,4 +1,5 @@
-from typing import *
+"当函数出现已知异常时重试"
+from typing import Callable, Union, overload, Optional
 import re
 import time
 from functools import wraps
@@ -6,6 +7,8 @@ from inspect import iscoroutinefunction
 
 from .handle_exp import acatch_exp, catch_exp
 from .types import *
+
+__all__ = ['retry', 'aretry']
 
 def _calc_next_interval(interval: float, 
                        retry_interval: IntervalType):

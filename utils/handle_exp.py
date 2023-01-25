@@ -1,10 +1,12 @@
+"让函数只抛出未知异常"
 import logging
 import re
 import traceback
-from typing import *
+from typing import Callable, Optional, Union, Coroutine, Any
 
 from .types import *
 
+__all__ = ['catch_exp', 'acatch_exp']
 
 def _handle_exp(e: Exception,
                echo,

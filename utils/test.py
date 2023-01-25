@@ -1,6 +1,8 @@
 import random
 from typing import Literal
 
+__all__ = ['get_random_str']
+
 RANDOM_DICT={
   "digit": """0123456789""",
   "lower": """abcdefghijklmnopqrstuvwxyz""",
