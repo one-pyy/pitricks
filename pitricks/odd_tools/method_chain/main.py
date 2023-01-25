@@ -1,10 +1,10 @@
 from typing import *
 import inspect
-import re
 import logging
-from logging import Logger
 import ast
 import io
+
+import regex as re
 
 from ...utils.code import CodeGenerater
 from ...path import TMP_CLASS_PATH
