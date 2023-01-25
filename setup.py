@@ -1,11 +1,10 @@
 from setuptools import setup, find_packages
-print(find_packages(where='.'))
 setup(
   name='pitricks',
-  version='0.0.4',
+  version='0.1.0-alpha.0',
   author='pyy',
   url='https://github.com/one-pyy/pitricks',
-  py_modules=find_packages(where='.'),
+  packages=find_packages(),
   install_requires=[],
   description='python真难Q皿Q'
 )
