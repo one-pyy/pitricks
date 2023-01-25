@@ -1,74 +1,76 @@
 # pitricks
 
-pitricks is a weird python module, to get `my python` handy.
+[Readme.md in English](https://github.com/one-pyy/pitricks/blob/main/readme-en.md)
 
-## install
+pitricks是一个奇怪的python模块，用来使`我的python`更顺手。
+
+## 安装
 
 ```
 pip3 install -U git+https://github.com/one-pyy/pitricks
 ```
 
-## utils
+## 工具
 
-`pitricks.utils` is generally useless, except for `retry`, `reflect.get_args`.
+`pitricks.utils`通常没有用处，除了`retry`, `reflect.get_args`。
 
 ### retry
 
-Similar to python's `retry` module, but can be decorated with `async functions`. In addition, it can be subdivided according to the str of the exception.
+类似于python的`retry`模块，但可以用`async`装饰。此外，它可以根据异常的str进行划分。
 
-This is a retry function in Python that can be used to decorate other functions or used as a standalone function. It supports various parameters such as retry times, retry intervals, retry exceptions, and retry exception message regular expressions. When retrying, you can specify the retry times, retry intervals, retry exception types, and retry exception message regular expressions. The retry interval can be a number, a tuple (minimum interval, maximum interval, multiplier), or a custom function to calculate the next interval from the previous interval. Retry exceptions can be a single exception type or a tuple of exception types. The retry exception message regular expression is used to match the exception message. If the retry times is not 1, the decorated function will be retried. If the retry times is 1 or the decorated function is executed successfully, the result of the decorated function will be returned.
+这是一个Python重试函数，可用于装饰其他函数或作为独立函数使用。它支持各种参数，如重试次数，重试间隔，重试异常和重试异常消息正则表达式。在重试时，可以指定重试次数，重试间隔，重试异常类型和重试异常消息正则表达式。重试间隔可以是数字，元组(最小间隔，最大间隔，乘数)或自定义函数来计算下一个间隔从上一个间隔。重试异常可以是单个异常类型或异常类型的元组。重试异常消息正则表达式用于匹配异常消息。如果重试次数不是1，则装饰函数将重试。如果重试次数是1或装饰函数成功执行，则返回装饰函数的结果。
 
-To use this function, you can either use it as a decorator or call it as a standalone function.
+要使用此函数，可以将其用作装饰器或作为独立函数调用。
 
-1. Using it as a decorator:
+1. 作为装饰器使用：
 
    ```python
    from pitricks.utils.retry import retry
    
    @retry(times=3, interval=1, exp=(IOError, ValueError), regex=".*")
    def my_func():
-       # some code here
+       # 一些代码
    ```
 
-   Here, the `my_func` will be retried 3 times with an interval of 1 second if either IOError or ValueError is raised `and` whose message match with the regex ".*"
+   在这里，如果引发IOError或ValueError并且其信息与正则表达式“.*”匹配，则`my_func`将以1秒的间隔重试3次。
 
-2. Using it as a standalone function:
+2. 作为独立函数使用：
 
    ```python
    from pitricks.utils.retry import retry
    
    def my_func():
-       # some code here
+       # 一些代码
    
    retry(my_func, times=3, interval=1, exp=(IOError, ValueError), regex=".*")
    ```
 
-   Here, the `my_func` will be retried 3 times with an interval of 1 second if either IOError or ValueError is raised and whose message match with the regex ".*"
+   在这里，如果引发IOError或ValueError并且其信息与正则表达式“.*”匹配，则`my_func`将以1秒的间隔重试3次。
 
-You can also use the keyword arguments `times`, `interval`, `exp`, `regex` when calling the function.
+您还可以在调用函数时使用关键字参数`times`，`interval`，`exp`，`regex`。
 
-Note:
+注意：
 
-- `times` : Number of times to retry (default -1, which means infinite retries)
-- `interval` : Retry interval, can be a number or a tuple (minimum interval, maximum interval, multiplier), or tuple (minimum interval, maximum interval, function)
-- `exp` : The exception(s) to retry on, can be a single exception class or a tuple of exception classes
-- `regex` : The regular expression to match the exception message, default is ".*". Only exp messages that match the regex patten will be captured.
+- `times` : 重试的次数（默认值-1，表示无限重试）
+- `interval` : 重试间隔，可以是数字或元组(最小间隔，最大间隔，乘数)，或元组(最小间隔，最大间隔，函数)
+- `exp` : 重试的异常，可以是单个异常类或异常类的元组
+- `regex` : 匹配异常消息的正则表达式，默认为“.*”。只有匹配正则表达式patten的exp消息才会被捕获。
 
 ### reflect.get_args
 
-This function `get_args` is used to get the arguments of a function and the variables in the upper scope.
+此函数`get_args`用于获取函数的参数和上层作用域中的变量。
 
-`get_args` takes in two arguments:
+`get_args`需要两个参数：
 
-- `func`: The function whose arguments you want to get.
-- `del_self`: A boolean flag that indicates whether the `self` argument should be removed from the returned arguments. (default: True)
+- `func`: 您要获取参数的函数。
+- `del_self`: 表示是否应从返回的参数中删除“self”参数（默认值: True）
 
-`get_args` returns a tuple containing two elements:
+`get_args`返回一个包含两个元素的元组：
 
-- A list of positional arguments
-- A dictionary of keyword arguments
+- 位置参数的列表
+- 关键字参数的字典
 
-This function is useful when you need to wrap another function with another function, and you want to preserve the original function's arguments. The function will check the arguments of the passed in function `func` and match them with the variables in the upper scope, if all the required arguments are present it will return them as tuple of arguments and keyword arguments, otherwise it will raise an exception.
+当您需要用另一个函数包装另一个函数并保留原始函数的参数时，此函数很有用。该函数将检查传入的函数`func`的参数并将它们与上层作用域中的变量匹配，如果所有必需的参数都存在，它将以参数和关键字参数的元组的形式返回它们，否则将引发异常。
 
 ```python
 from pitricks.utils.reflect import get_args
@@ -88,10 +90,10 @@ q(1, 2, 3, c=4, d=5, e=6, f=7)
 
 ### method_chaining
 
-This is a tool that can convert class functions that `return None` to `return self`, while keeping the function signature unchanged (enabling you to use code hints).
+这是一个工具，可以将`return None`的类函数转换为`return self`，同时保持函数签名不变（使您能够使用代码提示）。
 
-```python
-# chain.py
+```
+Copy code# chain.py
 from logging import FileHandler
 from threading import Thread
 
@@ -102,36 +104,34 @@ chain(FileHandler)
 chain(Thread)
 ```
 
-After running the above code, you can import the class that you specified from `pitricks.tmp.classes`.(or `from pitricks import tmp_class`)
+运行上面的代码后，您可以从`pitricks.tmp.classes`导入您指定的类。(或者 `from pitricks import tmp_class`)
 
-Like this:
+就像这样：
 
 ```python
 import logging
 
-# too much trouble
-# You need to assign the class to a variable, and then configure it
+# 太麻烦了
+# 您需要将类分配给变量，然后配置它
 from logging import FileHandler
 file_handler = FileHandler('1', encoding='utf-8')
 file_handler.setFormatter(...)
 file_handler.setLevel(...)
 logging.root.addHandler(file_handler)
 
-# chain method
+# 链接方法
 from pitricks.tmp.classes import FileHandler
-logging.root.addHandler(
-  FileHandler('1', encoding='utf-8').setFormatter(...).setLevel(...))
+logging.root.addHandler(FileHandler('1', encoding='utf-8').setFormatter(...).setLevel(...))
 
-
-
-# original method
+# 原始方法
 from threading import Thread
 t = Thread(target=...)
 t.setDaemon(True)
 t.start()
 
-# chain method
+# 链接方法
 from pitricks.tmp.classes import Thread
 Thread(target=...).setDaemon(True).start()
 ```
 
+这样，您就可以在调用类的函数时连续调用函数，而不需要每次都重新赋值给变量。这使得代码更简洁，更易于阅读。
