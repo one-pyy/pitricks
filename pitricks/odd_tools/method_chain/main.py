@@ -6,7 +6,7 @@ import io
 
 import regex as re
 
-from ...utils.code import CodeGenerater
+from ...utils.code_generater import CodeGenerater
 from ...path import TMP_CLASS_PATH
 
 T = TypeVar('T')

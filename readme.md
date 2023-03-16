@@ -12,7 +12,7 @@ pip3 install -U git+https://github.com/one-pyy/pitricks
 
 ## 工具
 
-`pitricks.utils`通常没有用处，除了`retry`, `reflect.get_args`。
+`pitricks.utils`通常没有用处，除了`retry`, `reflect.get_args`, `use_pool`。
 
 ### retry
 
@@ -85,6 +85,10 @@ def q(d, /, b=1, *args, c=3, **kwargs):
 
 q(1, 2, 3, c=4, d=5, e=6, f=7)
 ```
+
+### use_pool
+
+使你的对象不用重复地构造和析构, 而是在`__del__`函数中加入提供的对象池.
 
 ## odd_tools
 
