@@ -8,6 +8,8 @@ pitricks是一个奇怪的python模块，用来使`我的python`更顺手。
 
 ```
 pip3 install -U git+https://github.com/one-pyy/pitricks
+or 
+pip3 install pitricks
 ```
 
 ## 工具
