@@ -14,7 +14,7 @@ pip3 install pitricks
 
 ## 工具
 
-`pitricks.utils`通常没有用处，除了`retry`, `reflect.get_args`, `use_pool`。
+`pitricks.utils`通常没有用处，除了`retry`, `reflect.get_args`, `use_pool`, `relative_import_everywhere.make_parent_top`。
 
 ### retry
 
@@ -91,6 +91,22 @@ q(1, 2, 3, c=4, d=5, e=6, f=7)
 ### use_pool
 
 使你的对象不用重复地构造和析构, 而是在`__del__`函数中加入提供的对象池.
+
+### relative_import_everywhere.make_parent_top
+
+也可以直接`from pitricks.utils import make_parent_top`
+
+```python
+from pitricks.utils import make_parent_top
+__package__ = make_parent_top(100)
+from ..................................................................... import xxx
+```
+
+有效避免在相对引用项目中使用`python -m xxx.xxx.xxx`.
+
+如果顶部模块和二级模块名称相同会出问题, 但应该是python的问题?
+
+**谨慎使用, 可能有未知的bug**
 
 ## odd_tools
 
