@@ -41,7 +41,7 @@ class MPWorkflow(Generic[Require, Response]):
     return cls.manager.MPWorkflow() # type: ignore
   
   def __init__(self):
-    self.q: PriorityQueue[Task[Require]] = PriorityQueue()
+    self.q: 'PriorityQueue[Task[Require]]' = PriorityQueue()
     self.storages: Dict[int, Union[None, Response, Lock]] = {}
   
   def result(self, id: int, timeout: float = 600) -> Tuple[bool, Optional[Response]]:

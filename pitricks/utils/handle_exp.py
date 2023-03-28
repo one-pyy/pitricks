@@ -9,10 +9,10 @@ from .types import *
 __all__ = ['catch_exp', 'acatch_exp']
 
 def _handle_exp(e: Exception,
-               echo,
-               log_level,
-               raise_exp,
-               catch_regex):
+                echo,
+                log_level,
+                raise_exp,
+                catch_regex):
   if raise_exp:
     raise
 
@@ -32,7 +32,7 @@ def catch_exp(func: Callable[..., T1],
               _echo=False,
               _log_level=-1,
               _raise_exp=False,
-              _catch_classes: Union[type[Exception], tuple[type[Exception], ...]] = Exception,
+              _catch_classes: Exps = Exception,
               _catch_regex: Union[str, re.Pattern] = ".*",
               _failed_return: Optional[T2] = None,
               *args, **kwargs) -> Union[T1, Optional[T2]]:
@@ -52,7 +52,7 @@ async def acatch_exp(coroutine: Coroutine[Any, Any, T],
                      echo=False,
                      log_level=-1,
                      raise_exp=False,
-                     catch_classes: Union[type[Exception], tuple[type[Exception], ...]] = Exception,
+                     catch_classes: Exps = Exception,
                      catch_regex: Union[str, re.Pattern] = ".*",
                      failed_return: Optional[T2] = None) -> Union[T, Optional[T2]]:
   """(async版)执行传入的coroutine, 如果发生异常, 则根据其他参数处理异常

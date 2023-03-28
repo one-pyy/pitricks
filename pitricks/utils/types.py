@@ -8,5 +8,6 @@ WrapperType = Callable[[Callable[..., T]], Callable[..., T]]
 ExpType = Union[type[Exception], tuple[type[Exception], ...]]
 IntervalType = Union[float, tuple[float, float, float], tuple[float, float, Callable[[float], float]]]
 AsyncFuncType = Callable[..., Coroutine[Any, Any, T]]
+Exps = Union['type[Exception]', tuple['type[Exception]', ...]]
 
 class ExpOccurred: pass
