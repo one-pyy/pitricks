@@ -42,7 +42,7 @@ def _has_return(func: Callable):
 # def _filter(dic: Mapping[T1, T2], func: Callable[[T1, T2], bool]):
 #   return {k: v for k, v in dic.items() if func(k, v)}
 
-def _all_attr(cls: type)->Mapping[str, Any]:
+def _all_attr(cls: type) -> Mapping[str, Any]:
   ret = {}
   for c in cls.mro():
     ret.update(c.__dict__)
@@ -81,7 +81,7 @@ def _func_info(func: Callable):
   
   raise Exception("It looks like there is a bug, please submit an issue.")
 
-def chain(cls: Union[type, Iterable[type]], expect_func_name: list[str] = []) -> str:
+def chain(cls: Union[type, Iterable[type]], expect_func_name: List[str] = []) -> str:
   """使传入类可以链式调用，即每个方法返回self;
   expect_func_name用于指定不需要链式调用的方法名，双下划线开头的魔术方法已经自动省略;
   会返回创建类的代码, 同时写入tmp_class, 可以from pitricks.tmp_class import xxx;"""

@@ -1,11 +1,11 @@
 from typing import Any, Callable
-from pathlib2 import Path
+from pathlib import Path
 import sys
 import inspect
 
 __all__ = ['get_upper_vars', 'get_args', 'pwd']
 
-def get_upper_vars(level: int = 1, with_global: bool = False) -> dict[str, Any]:
+def get_upper_vars(level: int = 1, with_global: bool = False) -> 'dict[str, Any]':
   """获取上x层的变量, 但只是浅拷贝"""
   last_frame = sys._getframe(level+1)
   if with_global:
@@ -14,7 +14,7 @@ def get_upper_vars(level: int = 1, with_global: bool = False) -> dict[str, Any]:
     return last_frame.f_locals
 
 
-def get_args(func: Callable, del_self: bool = True) -> tuple[list, dict[str, Any]]:
+def get_args(func: Callable, del_self: bool = True) -> 'tuple[list, dict[str, Any]]':
   """当你在一个函数上套另一层时, 可能需要将参数无损传递..."""
   upper_vars = get_upper_vars()
   paras = dict(inspect.signature(func).parameters)
@@ -22,7 +22,7 @@ def get_args(func: Callable, del_self: bool = True) -> tuple[list, dict[str, Any
     paras.pop('self', None)
   
   args = []
-  kwargs: dict[str, Any] = {}
+  kwargs: 'dict[str, Any]' = {}
   need_keyword = False #当出现了VAR_POSITIONAL后位置参数就要转为关键字参数了
   
   for name, para in paras.items():

@@ -42,9 +42,9 @@ class MPWorkflow(Generic[Require, Response]):
   
   def __init__(self):
     self.q: 'PriorityQueue[Task[Require]]' = PriorityQueue()
-    self.storages: Dict[int, Union[None, Response, Lock]] = {}
+    self.storages: 'dict[int, Union[None, Response, Lock]]' = {}
   
-  def result(self, id: int, timeout: float = 600) -> Tuple[bool, Optional[Response]]:
+  def result(self, id: int, timeout: float = 600) -> 'tuple[bool, Optional[Response]]':
     "阻塞获取某个任务的结果, 如果[0]为false就是没算好, [1]为None就是出错"
     storage = self.storages.get(id, None) # type: ignore
     if isinstance(storage, LockType):
@@ -63,7 +63,7 @@ class MPWorkflow(Generic[Require, Response]):
               sync: Literal[True] = True,
               *,
               priority: float = 0., 
-              timeout: float = 600) -> Tuple[bool, Optional[Response]]: pass
+              timeout: float = 600) -> 'tuple[bool, Optional[Response]]': pass
   
   @overload # 异步, 有callback就不会返回结果
   def publish(self, 
