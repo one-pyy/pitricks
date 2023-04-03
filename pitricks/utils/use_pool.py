@@ -7,8 +7,8 @@ T1 = TypeVar('T1')
 
 class PoolProtocol(Protocol[T]):
   "Of course you can add more parameters to the get methods without reporting an error"
-  def put(self, obj: T): pass
-  def get(self) -> Union[T, None]: pass
+  def put(self, obj: T, /): ...
+  def get_or_none(self) -> Union[T, None]: ...
 
 class ExamplePool(Generic[T]):
   def __init__(self) -> None:
@@ -18,21 +18,23 @@ class ExamplePool(Generic[T]):
   def put(self, obj: T):
     self.q.put(obj)
   
-  def get(self) -> Union[T, None]:
+  def get_or_none(self) -> Union[T, None]:
     try:
       return self.q.get_nowait()
     except Empty:
       return None
 
-def use_pool(Tp: Type[T], pool: PoolProtocol[T1]) -> Type[T]:
+def use_pool(Tp: Type[T], 
+             pool: Optional[PoolProtocol[T1]] = None) -> Type[T]:
   "请自行在__init__中检测是否需要重新初始化实例"
+  pool: PoolProtocol[T1] = pool or ExamplePool()
   class NewTp:
     def __new__(cls, *args, **kwargs):
-      obj = pool.get()
+      obj = pool.get_or_none()
       if obj is None:
         obj = object.__new__(Tp, *args, **kwargs)
       new_tp = super().__new__(cls)
-      super().__setattr__(new_tp, 'me', obj)
+      object.__setattr__(new_tp, 'me', obj)
       return new_tp
     
     def __init__(self, *args, **kwargs):

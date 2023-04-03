@@ -28,14 +28,15 @@ def _handle_exp(e: Exception,
     logging.log(log_level, traceback.format_exc())
 
 
-def catch_exp(func: Callable[..., T1],
+def catch_exp(func: Callable[..., T1], 
+              *args, 
               _echo=False,
               _log_level=-1,
               _raise_exp=False,
               _catch_classes: Exps = Exception,
               _catch_regex: Union[str, re.Pattern] = ".*",
               _failed_return: Optional[T2] = None,
-              *args, **kwargs) -> Union[T1, Optional[T2]]:
+              **kwargs) -> Union[T1, Optional[T2]]:
   """执行func函数, 参数给args和kwargs, 如果发生异常, 则根据其他参数处理异常
   如果log_level为-1, 则不记录日志, 否则记录日志, 且日志级别为log_level; 可以传入logging.DEBUG等常量"""
   if not isinstance(_catch_classes, tuple):

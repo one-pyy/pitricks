@@ -9,7 +9,7 @@ def init_log(level, filename: str = ""):
   
   if filename:
     file_formatter = lg.Formatter(
-      fmt='%(asctime)s [%(levelname)s] %(pathname)s,%(lineno)d:%(funcName)s    %(message)s',
+      fmt='%(asctime)s [%(levelname)s] %(pathname)s,%(lineno)d: %(funcName)s\n\t%(message)s',
       datefmt="%Y-%m-%d %H:%M:%S")
     file_handler = lg.FileHandler(filename, encoding='UTF-8')
     file_handler.setLevel(level)
@@ -17,7 +17,7 @@ def init_log(level, filename: str = ""):
     lg.root.addHandler(file_handler)
   
   rich_formatter = lg.Formatter(
-    fmt='%(asctime)s [%(levelname)s] %(pathname)s,%(lineno)d: %(funcName)s\n%(message)s',
+    fmt='%(asctime)s [%(levelname)s] %(pathname)s,%(lineno)d: %(funcName)s\n\t%(message)s',
     datefmt="%H:%M:%S")
   rich = RichHandler(level=level,
                      show_level=False,

@@ -26,26 +26,26 @@ pip3 install pitricks
 
 1. 作为装饰器使用：
 
-   ```python
+```py3
    from pitricks.utils.retry import retry
    
    @retry(times=3, interval=1, exp=(IOError, ValueError), regex=".*")
    def my_func():
        # 一些代码
-   ```
+```
 
    在这里，如果引发IOError或ValueError并且其信息与正则表达式“.*”匹配，则`my_func`将以1秒的间隔重试3次。
 
 2. 作为独立函数使用：
 
-   ```python
+```py3
    from pitricks.utils.retry import retry
    
    def my_func():
        # 一些代码
    
    retry(my_func, times=3, interval=1, exp=(IOError, ValueError), regex=".*")
-   ```
+```
 
    在这里，如果引发IOError或ValueError并且其信息与正则表达式“.*”匹配，则`my_func`将以1秒的间隔重试3次。
 
@@ -74,7 +74,7 @@ pip3 install pitricks
 
 当您需要用另一个函数包装另一个函数并保留原始函数的参数时，此函数很有用。该函数将检查传入的函数`func`的参数并将它们与上层作用域中的变量匹配，如果所有必需的参数都存在，它将以参数和关键字参数的元组的形式返回它们，否则将引发异常。
 
-```python
+```py3
 from pitricks.utils.reflect import get_args
 def k(d, /, b=1, *args, c=3, **kwargs):
   pass
@@ -96,9 +96,9 @@ q(1, 2, 3, c=4, d=5, e=6, f=7)
 
 也可以直接`from pitricks.utils import make_parent_top`
 
-```python
+```py3
 from pitricks.utils import make_parent_top
-__package__ = make_parent_top(100)
+make_parent_top(100)
 from ..................................................................... import xxx
 ```
 
@@ -130,7 +130,7 @@ chain(Thread)
 
 就像这样：
 
-```python
+```py3
 import logging
 
 # 太麻烦了
